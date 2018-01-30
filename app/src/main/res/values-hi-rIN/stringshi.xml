@@ -3,6 +3,12 @@
     <string name="app_name">प्रयोगशाला 1</string>
     <string name="hello_message">नमस्ते दुनिया</string>
     <string name="ButtonText">मैं एक बटन हूँ</string>
+    <string name="login">लॉग इन करें</string>
+    <string name="loginName">लॉगिन नाम</string>
+    <string name="password">पारण शब्द</string>
+    <string name="radioButton">रेडियो बटन</string>
+    <string name="checkBox">चेक बॉक्स</string>
+    <string name="switchButton">यह क्या करता है?</string>
 </resources>
 
 
