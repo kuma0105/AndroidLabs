@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">प्रयोगशाला 1</string>
+    <string name="app_name">प्रयोगशाला 3</string>
     <string name="hello_message">नमस्ते दुनिया</string>
     <string name="ButtonText">मैं एक बटन हूँ</string>
     <string name="login">लॉग इन करें</string>
@@ -9,6 +9,12 @@
     <string name="radioButton">रेडियो बटन</string>
     <string name="checkBox">चेक बॉक्स</string>
     <string name="switchButton">यह क्या करता है?</string>
+    <string name="dialog_message">क्या आप निश्चित हैं आपकी बाहर निकलने की इच्छा है</string>
+    <string name="dialog_title">बाहर निकलने की पुष्टि करें</string>
+    <string name="ok">ठीक</string>
+    <string name="cancel">रद्द करना</string>
+    <string name="switchOn">स्विच चालू है</string>
+    <string name="switchOff">स्विच बंद है</string>
 </resources>
 
 
