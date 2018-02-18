@@ -23,4 +23,14 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp" />
 
+    <Button
+        android:id="@+id/buttonChat"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:text="@string/chat"
+        app:layout_constraintLeft_toRightOf="@+id/button"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="340dp" />
+
 </android.support.constraint.ConstraintLayout>
