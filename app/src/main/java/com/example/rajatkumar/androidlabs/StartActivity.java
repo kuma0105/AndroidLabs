@@ -19,11 +19,13 @@ public class StartActivity extends Activity {
         Log.i(ACTIVITY_NAME, "in onCreate(): ");
         Button btn2 = (Button) findViewById(R.id.button) ;
         Button buttonChat = (Button) findViewById(R.id.buttonChat);
+        Button buttonWeather = (Button) findViewById(R.id.buttonWeather);
 
         buttonChat.setOnClickListener(e ->{
             Log.i(ACTIVITY_NAME, "User clicked Start Chat");
             Intent chatIntent = new Intent(StartActivity.this, ChatWindow.class);
             startActivity(chatIntent);
+
         });
 
         btn2.setOnClickListener(e -> {
@@ -32,6 +34,12 @@ public class StartActivity extends Activity {
         startActivityForResult(secondIntent, 50);
 
         }  );
+
+        buttonWeather.setOnClickListener(e ->{
+            Log.i(ACTIVITY_NAME, "User clicked Weather Button");
+            Intent chatIntent = new Intent(StartActivity.this, WeatherForecast.class);
+            startActivity(chatIntent);
+        });
 
     }
 
