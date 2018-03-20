@@ -37,6 +37,8 @@ public class WeatherForecast extends Activity {
     TextView maxTemp;
     TextView wind;
     ProgressBar bar;
+
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
