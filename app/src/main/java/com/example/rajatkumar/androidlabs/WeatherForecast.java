@@ -36,18 +36,20 @@ public class WeatherForecast extends Activity {
     TextView minTemp;
     TextView maxTemp;
     TextView wind;
+    TextView city;
     ProgressBar bar;
 
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_forecast);
-        image = (ImageView )findViewById(R.id.weatherImage);
+        image = (ImageView) findViewById(R.id.weatherImage);
         cTemp = (TextView) findViewById(R.id.currentTemp);
         minTemp = (TextView) findViewById(R.id.minTemp);
         maxTemp = (TextView) findViewById(R.id.maxTemp);
         wind = (TextView) findViewById(R.id.windSpeed);
+        city = findViewById(R.id.location);
 
         bar = (ProgressBar) findViewById(R.id.progressBar);
         bar.setVisibility(View.VISIBLE);
@@ -57,7 +59,7 @@ public class WeatherForecast extends Activity {
 
     }
 
-    public class ForecastQuery extends AsyncTask<String, Integer , String>{
+    public class ForecastQuery extends AsyncTask<String, Integer, String> {
         public String currentTemp;
         public String minimumTemp;
         public String maximumTemp;
@@ -65,16 +67,18 @@ public class WeatherForecast extends Activity {
         public Bitmap bitmap;
         public String iconName;
         public String ImageURL;
+        public String location;
         HTTPUtils http = new HTTPUtils();
-        protected String doInBackground(String ...args){
+
+        protected String doInBackground(String... args) {
             URL url = null;
             HttpURLConnection conn = null;
             try {
-                for(String myURL: args) {
+                for (String myURL : args) {
                     url = new URL(myURL);
                     conn = (HttpURLConnection) url.openConnection();
-                    conn.setReadTimeout(10000 );
-                    conn.setConnectTimeout(15000 );
+                    conn.setReadTimeout(10000);
+                    conn.setConnectTimeout(15000);
                     conn.setRequestMethod("GET");
                     conn.setDoInput(true);
                     conn.connect();
@@ -82,13 +86,16 @@ public class WeatherForecast extends Activity {
                     XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                     factory.setNamespaceAware(false);
                     XmlPullParser xml = factory.newPullParser();
-                    xml.setInput(conn.getInputStream(),"UTF-8");
+                    xml.setInput(conn.getInputStream(), "UTF-8");
                     int type;
 
-                    while( (type = xml.getEventType()) != XmlPullParser.END_DOCUMENT){
-                        if (xml.getEventType() == xml.START_TAG){
-                            if(xml.getName().equals("temperature")){
-                                currentTemp= xml.getAttributeValue(null, "value");
+                    while ((type = xml.getEventType()) != XmlPullParser.END_DOCUMENT) {
+                        if (xml.getEventType() == xml.START_TAG) {
+                            if (xml.getName().equals("city")) {
+                                location = xml.getAttributeValue(null, "name");
+                                Log.i("City", location);
+                            } else if (xml.getName().equals("temperature")) {
+                                currentTemp = xml.getAttributeValue(null, "value");
                                 publishProgress(25);
                                 Log.i("current temprature", currentTemp);
                                 minimumTemp = xml.getAttributeValue(null, "min");
@@ -97,17 +104,15 @@ public class WeatherForecast extends Activity {
                                 maximumTemp = xml.getAttributeValue(null, "max");
                                 publishProgress(75);
                                 Log.i("Maximum temprature", maximumTemp);
-                            }
-                            else if (xml.getName().equals("speed")){
+                            } else if (xml.getName().equals("speed")) {
                                 windSpeed = xml.getAttributeValue(null, "value");
                                 Log.i("Wind speed", windSpeed);
-                            }
-                            else if (xml.getName().equals("weather")){
+                            } else if (xml.getName().equals("weather")) {
                                 iconName = xml.getAttributeValue(null, "icon");
-                                ImageURL=  "http://openweathermap.org/img/w/" + iconName + ".png";
+                                ImageURL = "http://openweathermap.org/img/w/" + iconName + ".png";
                                 publishProgress(100);
                             }
-                       }
+                        }
                         xml.next();
                     }
 
@@ -116,7 +121,7 @@ public class WeatherForecast extends Activity {
                 e.printStackTrace();
                 Log.e("Error", e.getMessage());
             }
-            if(fileExistance(iconName+".png")==true) {
+            if (fileExistance(iconName + ".png") == true) {
                 FileInputStream fis = null;
                 try {
                     fis = openFileInput(iconName + ".png");
@@ -124,14 +129,13 @@ public class WeatherForecast extends Activity {
                     e.printStackTrace();
                 }
                 bitmap = BitmapFactory.decodeStream(fis);
-                Log.i("Finding image in files","Looking for "+iconName+".png");
+                Log.i("Finding image in files", "Looking for " + iconName + ".png");
                 Log.i("Weather Image", "Opening the image from Local file directory");
-            }
-            else {
+            } else {
                 FileOutputStream outputStream = null;
                 try {
                     bitmap = http.getImage(ImageURL);
-                    Log.i("Finding image online","Looking for "+iconName+".png");
+                    Log.i("Finding image online", "Looking for " + iconName + ".png");
                     Log.i("Weather Image", "Downloading the image online");
                     outputStream = openFileOutput(iconName + ".png", Context.MODE_PRIVATE);
                 } catch (FileNotFoundException e) {
@@ -149,28 +153,30 @@ public class WeatherForecast extends Activity {
 
             return "finished";
         }
-        public void onProgressUpdate(Integer ...data){
+
+        public void onProgressUpdate(Integer... data) {
             bar.setVisibility(View.VISIBLE);
             bar.setProgress(data[0]);
         }
 
-        public void onPostExecute(String result){
+        public void onPostExecute(String result) {
             bar.setVisibility(View.INVISIBLE);
-            cTemp.setText("current Temperature "+currentTemp+"C");
-            minTemp.setText("minimum Temperature "+minimumTemp+"C");
-            maxTemp.setText("maximum Temperature "+maximumTemp+"C");
-            wind.setText("wind Speed "+windSpeed);
+            city.setText(location);
+            cTemp.setText(currentTemp + "°C");
+            minTemp.setText("min " + minimumTemp + "°C");
+            maxTemp.setText("max " + maximumTemp + "°C");
+            wind.setText("wind " + windSpeed);
             image.setImageBitmap(bitmap);
         }
 
-        public boolean fileExistance(String fname){
+        public boolean fileExistance(String fname) {
             File file = getBaseContext().getFileStreamPath(fname);
-            return file.exists();   }
+            return file.exists();
+        }
     }
 
 
-
-     public class HTTPUtils {
+    public class HTTPUtils {
         public Bitmap getImage(URL url) {
             HttpURLConnection connection = null;
             try {
@@ -189,6 +195,7 @@ public class WeatherForecast extends Activity {
                 }
             }
         }
+
         public Bitmap getImage(String urlString) {
             try {
                 URL url = new URL(urlString);

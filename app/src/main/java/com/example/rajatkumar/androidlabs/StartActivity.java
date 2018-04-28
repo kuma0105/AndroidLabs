@@ -10,18 +10,18 @@ import android.widget.Toast;
 
 public class StartActivity extends Activity {
     protected static final String ACTIVITY_NAME = "StartActivity";
-
+    Button buttonToolbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         Log.i(ACTIVITY_NAME, "in onCreate(): ");
-        Button btn2 = (Button) findViewById(R.id.button) ;
+        Button btn2 = (Button) findViewById(R.id.button);
         Button buttonChat = (Button) findViewById(R.id.buttonChat);
         Button buttonWeather = (Button) findViewById(R.id.buttonWeather);
-
-        buttonChat.setOnClickListener(e ->{
+        buttonToolbar = findViewById(R.id.buttonToolbar);
+        buttonChat.setOnClickListener(e -> {
             Log.i(ACTIVITY_NAME, "User clicked Start Chat");
             Intent chatIntent = new Intent(StartActivity.this, ChatWindow.class);
             startActivity(chatIntent);
@@ -30,17 +30,21 @@ public class StartActivity extends Activity {
 
         btn2.setOnClickListener(e -> {
 
-        Intent secondIntent = new Intent(StartActivity.this, ListItemsActivity.class);
-        startActivityForResult(secondIntent, 50);
+            Intent secondIntent = new Intent(StartActivity.this, ListItemsActivity.class);
+            startActivityForResult(secondIntent, 50);
 
-        }  );
+        });
 
-        buttonWeather.setOnClickListener(e ->{
+        buttonWeather.setOnClickListener(e -> {
             Log.i(ACTIVITY_NAME, "User clicked Weather Button");
             Intent chatIntent = new Intent(StartActivity.this, WeatherForecast.class);
             startActivity(chatIntent);
         });
-
+        buttonToolbar.setOnClickListener(e -> {
+            Log.i(ACTIVITY_NAME, "User clicked Toolbar Button");
+            Intent intent = new Intent(StartActivity.this, TestToolbar.class);
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -52,7 +56,7 @@ public class StartActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(ACTIVITY_NAME,  "in onStart(): ");
+        Log.i(ACTIVITY_NAME, "in onStart(): ");
 
     }
 
@@ -69,23 +73,22 @@ public class StartActivity extends Activity {
         Log.i(ACTIVITY_NAME, "in onStop(): ");
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.i(ACTIVITY_NAME, "in onDestroy(): ");
 
     }
+
     @Override
-    public void onActivityResult( int requestCode, int resultCode, Intent data)
-    {
-        if(resultCode == 50)
-        {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 50) {
             resultCode = 50;
             Log.i(ACTIVITY_NAME, "Returned to StartActivity.onActivityResult");
-        }
-        else if (resultCode == Activity.RESULT_OK){
+        } else if (resultCode == Activity.RESULT_OK) {
             String messagePassed = data.getStringExtra("Response");
-        Toast toast =    Toast.makeText(StartActivity.this, messagePassed, Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(StartActivity.this, messagePassed, Toast.LENGTH_LONG);
             toast.show();
         }
 

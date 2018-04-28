@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,10 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_message"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentBottom="true" />
 
     <Button
         android:id="@+id/button"
@@ -26,11 +23,21 @@
     <Button
         android:id="@+id/buttonChat"
         android:layout_width="wrap_content"
-        android:layout_height="46dp"
+        android:layout_height="wrap_content"
         android:text="@string/chat"
-        app:layout_constraintLeft_toRightOf="@+id/button"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="340dp" />
+        android:layout_toRightOf="@+id/button"/>
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/buttonWeather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/weather"
+        android:layout_toRightOf="@+id/buttonChat" />
+
+    <Button
+        android:id="@+id/buttonToolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test Toolbar"
+        android:layout_below="@+id/button"/>
+</RelativeLayout>

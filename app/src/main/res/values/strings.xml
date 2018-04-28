@@ -16,4 +16,9 @@
     <string name="switchOff">Switch is Off</string>
     <string name="chat">Start Chat</string>
     <string name="send">Send</string>
+    <string name="weather">Weather</string>
+    <string name="title_activity_test_toolbar">TestToolbar</string>
+    <string name="AlertTitle2">Do you want to go back?</string>
+    <string name="AlertTitle3">Set new text for the snackbar?</string>
+    <string name="ImageDisc">This is the image of CANADA</string>
 </resources>
